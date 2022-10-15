@@ -135,7 +135,7 @@ const BottomCard = ({ id, imageURI, tittle = "tittle" }) => {
           spacing={4}
         >
           <Box
-            width="85px"
+            width="130px"
             style={{
               backgroundColor: bgnSelector(status),
               display: "flex",

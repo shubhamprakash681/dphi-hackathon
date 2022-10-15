@@ -100,7 +100,7 @@ const DetailsPage = () => {
               )}
               {status === "past" && (
                 <Typography>
-                  Ends On {dayjs(startDate).format(" DD MMM'YY h:mm A")}
+                  Ended On {dayjs(endDate).format(" DD MMM'YY h:mm A")}
                 </Typography>
               )}
               {status === "active" && "Active"}

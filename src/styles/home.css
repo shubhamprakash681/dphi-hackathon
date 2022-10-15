@@ -1,0 +1,73 @@
+#dec-stack-main {
+    display: flex;
+    flex-direction: column;
+    
+}
+#dec-top {
+    background-color: burlywood;
+}
+#dec-top, #dec-bottom {
+    padding: 5px;
+    height: 50%;
+}
+.rocket-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#rocket-img {
+    width: 70%;
+    max-height: 350px;
+}
+.icnCont {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.right {
+    display: block;
+    margin: auto 10px;
+}
+.right > h2 {
+    margin: 0;
+}
+.right > p {
+    margin: 0;
+}
+.midHeader {
+    padding: 10px;
+}
+.detCardCont {
+    margin: 10px 0;
+    padding: 10px 10px;
+}
+
+/* bottom */
+#bottomHeader {
+    padding: 20px 10px;
+}
+#searchBox {
+    width: 100%;
+    padding: 10px;
+    border: none;
+
+}
+.selectLabels {
+    padding: 10px;
+}
+#filter-label {
+    border: 1px solid #53934c;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+#styledImageBox {
+    box-sizing: border-box;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    background-clip: padding-box;  
+    -moz-background-clip: padding;  
+    -webkit-background-clip: padding;
+}

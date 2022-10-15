@@ -1,0 +1,12 @@
+.menuItemDiv:hover {
+    /* border: 2px solid rgb(82,152,122); */
+    background-color: rgba(81, 146, 118, 0.192);
+}
+
+.form-input-fields {
+    padding: 10px 20px;
+    margin: 15px 0;
+    min-width: 200px;
+    width: 50%;
+    outline-color: rgb(83,147,76);
+}

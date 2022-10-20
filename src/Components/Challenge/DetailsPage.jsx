@@ -6,12 +6,14 @@ import React, { useEffect, useState } from "react";
 import { theme } from "../../styles/theme";
 import "../../styles/challenges.css";
 import { useDispatch, useSelector } from "react-redux";
-import { Link as LNK, useNavigate } from "react-router-dom";
+import { Link as LNK, useLocation, useNavigate } from "react-router-dom";
 import {
   deleteChallenge,
+  getAllChallenges,
   getCurrentChallengeDetails,
 } from "../../actions/challengesActions";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 const DetailsPage = () => {
   const stateVar = useSelector((state) => state.myReducers);
@@ -51,7 +53,7 @@ const DetailsPage = () => {
     const currentChallenge = allChallenges.filter((item) => {
       return item.id === currentChallengeId;
     });
-    console.log("here, ", currentChallenge[0]);
+    // console.log("here, ", currentChallenge[0]);
 
     setId(currentChallenge[0].id);
     setTittle(currentChallenge[0].challengeName);
@@ -65,6 +67,8 @@ const DetailsPage = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  // const { target_url } = location.state as LocationState || { target_url: null};
 
   return (
     <>
@@ -155,9 +159,10 @@ const DetailsPage = () => {
           >
             <StyledToolBar>
               <Box display={"flex"}>
-                {pages.map((page) => (
+                {pages.map((page, index) => (
                   <>
                     <Box
+                      key={index + 1001}
                       className="menuItemDiv"
                       style={{
                         margin: "0 2vw",
@@ -168,7 +173,9 @@ const DetailsPage = () => {
                         borderRadius: "2px",
                       }}
                     >
-                      <StyledLink to={"/"}>{page}</StyledLink>
+                      <StyledLink key={index} to={"/"}>
+                        {page}
+                      </StyledLink>
                     </Box>
                   </>
                 ))}
@@ -213,7 +220,17 @@ const DetailsPage = () => {
                     event.preventDefault();
 
                     dispatch(deleteChallenge(id));
+                    // .then(() => {
+                    //   try {
+                    //     navigate("/");
+                    //   } catch (err) {
+                    //     console.log(err);
+                    //   }
+                    // });
 
+                    toast("Deleted Successfully");
+
+                    console.log("navigating");
                     navigate("/");
                   }}
                   variant="outlined"

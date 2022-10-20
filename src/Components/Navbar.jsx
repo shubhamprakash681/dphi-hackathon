@@ -13,6 +13,7 @@ import AvatarPic from "../assets/icons/avatar-370-456322.webp";
 import React from "react";
 import { theme } from "../styles/theme";
 import { Mail, Notifications } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 
 const StyledToolBar = styled(Toolbar)(({ theme }) => ({
   display: "flex",
@@ -37,8 +38,10 @@ const Navbar = () => {
     >
       <StyledToolBar>
         <Stack direction={"row"} alignItems="center">
-          <img src={Logo} alt="logo" height="25px" />
-          <Typography color={theme.palette.primary.main} variant="h6">
+          <Link to={"/"}>
+            <img src={Logo} alt="logo" height="25px" />
+          </Link>
+          <Typography marginLeft={'5px'} color={theme.palette.primary.main} variant="h6">
             DPhi
           </Typography>
         </Stack>

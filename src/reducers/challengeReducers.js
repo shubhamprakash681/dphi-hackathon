@@ -15,7 +15,7 @@ const challengeReducer = createReducer(initialChallengesState, {
   },
 
   SET_CURRENT_CHALLENGE: (state, action) => {
-    console.log("In reducers, id= ", action.payload);
+    // console.log("In reducers, id= ", action.payload);
 
     state.currentChallengeID = action.payload;
   },

@@ -5,6 +5,7 @@ import {
   CircularProgress,
   FormControl,
   Grid,
+  InputAdornment,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -15,12 +16,12 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useCallback, useEffect, useState } from "react";
-import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
+// import SearchTwoToneIcon from "@mui/icons-material/SearchTwoTone";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import BottomCard from "./BottomCard";
 
 import { theme } from "../../../styles/theme";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 
 const status = ["all", "active", "upcoming", "past"];
@@ -41,6 +42,7 @@ const Bottom = () => {
   const { challenges } = useSelector(
     (state) => state.myReducers.challengeReducer
   );
+  const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
 
   let [localChallenges, setLocalChallenges] = useState(challenges);
@@ -81,15 +83,30 @@ const Bottom = () => {
 
     // console.log("temp: ", temp);
 
-    let temp2 = [];
-    temp.forEach((ch) => {
-      if (selectedOptions.includes(ch.level)) {
-        temp2.push(ch);
+    // checking for levels i selectedOptions
+    let found = 0;
+    ["easy", "medium", "hard"].forEach((op) => {
+      if (selectedOptions.includes(op)) {
+        found = 1;
       }
     });
-    // console.log("temp2: ", temp2);
 
-    setLocalChallenges(temp2);
+    if (found === 1) {
+      // console.log("found");
+
+      let temp2 = [];
+      temp.forEach((ch) => {
+        if (selectedOptions.includes(ch.level)) {
+          temp2.push(ch);
+        }
+      });
+      // console.log("temp2: ", temp2);
+
+      setLocalChallenges(temp2);
+    } else {
+      // console.log("not found");
+      setLocalChallenges(temp);
+    }
   };
 
   // sort
@@ -124,8 +141,13 @@ const Bottom = () => {
 
     runFilter();
 
-    // runSort();
+    runSort();
   }, [selectedOptions, loaded]);
+
+  // useEffect(() => {
+  //   console.log("state changed");
+  //   console.log("state:- ", challenges);
+  // }, [dispatch]);
 
   useEffect(() => {
     runSort();
@@ -138,7 +160,7 @@ const Bottom = () => {
   }, [challenges]);
 
   useEffect(() => {
-    console.log("searchString = ", searchString);
+    // console.log("searchString = ", searchString);
     if (searchString && loaded === true) {
       let temp = [];
 
@@ -151,10 +173,11 @@ const Bottom = () => {
       setLocalChallenges(temp);
     }
 
-    if (searchString === null) {
+    if (searchString === null || searchString === undefined) {
+      // console.log("null strig g");
+      setLocalChallenges(challenges);
       runFilter();
       runSort();
-      // setLocalChallenges(challenges);
     }
   }, [searchString]);
 
@@ -308,6 +331,7 @@ const Bottom = () => {
                 padding={"20px 2vmin"}
                 fontSize={"x-large"}
                 item
+                key={index}
                 xs={12}
                 sm={12}
                 md={6}

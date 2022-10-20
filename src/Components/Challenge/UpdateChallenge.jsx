@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import FileBase64 from "react-file-base64";
 
 import dayjs from "dayjs";
+import moment from "moment";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { DateTimePicker } from "@mui/x-date-pickers";
@@ -15,17 +16,44 @@ import {
   updateChallengeById,
 } from "../../actions/challengesActions";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateChallenge = () => {
   const StyledLabel = styled("label")(({ theme }) => ({
     display: "block",
   }));
 
+  const replaceChar = (origString, replaceChar, index) => {
+    let firstPart = origString.substr(0, index);
+    let lastPart = origString.substr(index + 1);
+
+    let newString = firstPart + replaceChar + lastPart;
+    return newString;
+  };
+
+  const setSecondsToZero = (date) => {
+    var colonCount = 0;
+    var i = 0;
+    for (var i; i < date.length; i++) {
+      if (date[i] === ":") {
+        colonCount++;
+      }
+      if (colonCount === 2) {
+        break;
+      }
+    }
+    date = replaceChar(date, "0", i + 1);
+    date = replaceChar(date, "0", i + 2);
+
+    return date;
+  };
+
   const currentTimeGenerator = () => {
     let d = dayjs(new Date()).format();
+    d = setSecondsToZero(d);
 
+    // console.log("dayjs with zero seconds:- ", d);
     return d;
-    // console.log(d);
   };
 
   const stateVar = useSelector((state) => state.myReducers);
@@ -43,13 +71,13 @@ const UpdateChallenge = () => {
     const currentChallengeId = stateVar.challengeReducer.currentChallengeID;
 
     if (currentChallengeId !== 0) {
-      console.log("UPDATE CHALLENGE");
+      // console.log("UPDATE CHALLENGE");
       const allChallenges = stateVar.challengeReducer.challenges;
 
       const currentChallenge = allChallenges.filter((item) => {
         return item.id === currentChallengeId;
       });
-      console.log("here, ", currentChallenge[0]);
+      // console.log("here, ", currentChallenge[0]);
 
       setId(currentChallenge[0].id);
       setChallengeName(currentChallenge[0].challengeName);
@@ -60,14 +88,14 @@ const UpdateChallenge = () => {
       setOverview(currentChallenge[0].overview);
       setBannerImageURL(currentChallenge[0].bannerImageURL);
     } else {
-      console.log("CREATE CHALLENGE");
+      // console.log("CREATE CHALLENGE");
 
       setId(0);
     }
   }, [stateVar]);
 
   const onBannerImageChange = ({ base64 }) => {
-    console.log(base64);
+    // console.log(base64);
     setBannerImageURL(base64);
   };
 
@@ -120,6 +148,7 @@ const UpdateChallenge = () => {
                   bannerImageURL
                 )
               );
+              toast("Created Successfully");
             } else {
               // Dispatch Update Challenge
               dispatch(
@@ -134,10 +163,11 @@ const UpdateChallenge = () => {
                   bannerImageURL
                 )
               );
+              toast("Updated Successfully");
 
               // Resetting states back to initial
               dispatch(getCurrentChallengeDetails(0));
-              console.log('resetted');
+              // console.log("resetted");
             }
 
             setChallengeName("");
@@ -174,7 +204,7 @@ const UpdateChallenge = () => {
                   value={startDate}
                   required
                   onChange={(date) => {
-                    setStartDate(dayjs(date).format());
+                    setStartDate(setSecondsToZero(dayjs(date).format()));
                   }}
                 />
               </LocalizationProvider>
@@ -192,7 +222,7 @@ const UpdateChallenge = () => {
                   required
                   onChange={(date) => {
                     // console.log(dayjs(date).format());
-                    setEndDate(dayjs(date).format());
+                    setEndDate(setSecondsToZero(dayjs(date).format()));
                   }}
                 />
               </LocalizationProvider>

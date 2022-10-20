@@ -5,7 +5,6 @@ import {
   CircularProgress,
   FormControl,
   Grid,
-  InputAdornment,
   InputLabel,
   ListItemText,
   MenuItem,
@@ -141,13 +140,13 @@ const Bottom = () => {
 
     runFilter();
 
-    runSort();
+    // runSort();
   }, [selectedOptions, loaded]);
 
-  // useEffect(() => {
-  //   console.log("state changed");
-  //   console.log("state:- ", challenges);
-  // }, [dispatch]);
+  useEffect(() => {
+    // console.log("state changed");
+    // console.log("state:- ", challenges);
+  }, [dispatch]);
 
   useEffect(() => {
     runSort();
@@ -173,11 +172,10 @@ const Bottom = () => {
       setLocalChallenges(temp);
     }
 
-    if (searchString === null || searchString === undefined) {
-      // console.log("null strig g");
-      setLocalChallenges(challenges);
+    if (searchString === null) {
       runFilter();
       runSort();
+      // setLocalChallenges(challenges);
     }
   }, [searchString]);
 

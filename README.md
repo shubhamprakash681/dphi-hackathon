@@ -1,5 +1,5 @@
 # To see the live demo of this project, click on the link below:-
-[InstaMe Live Demo](https://dphi-hackathon-98e69.web.app/)
+[Live Demo](https://dphi-hackathon-98e69.web.app/)
 
 
 
